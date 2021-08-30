@@ -1,0 +1,46 @@
+:root {
+    --primary-color: #fff;
+    --secondary-color: #000;
+    --card-color: pink;
+    --inside-text-color: #fff;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+h1 {
+    color : var(--primary-color);
+}
+
+h2 {
+    color : var(--secondary-color);
+}
+
+.header {
+    background-color: darkblue;
+}
+
+.films_overview {
+    background-color:grey;
+    display: block;
+    text-align: center;
+}
+
+.card_list {
+    background-color:white;
+}
+
+.film_card {
+    text-align: center;
+    display: inline-block;
+    border: 1px solid black;
+    width: 5em;
+    height: 5em;
+}
+
+.footer {
+    background-color: darkblue;
+}
