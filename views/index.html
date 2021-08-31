@@ -29,11 +29,15 @@
             <input type="button" value="APPEL API" onclick="buttonClickGet()">
         </div>
 
-        <div class="films_overview gondola_head center">
+        <div class="films_overview gondola_head center" id="gondola_head">
             <h1>Titre de la vidéo</h1>
             <i class="fas fa-play-circle"></i>
             <p>Description du film</p>
             <img src="" alt="Image de la vidéo">
+        </div>
+
+        <div id="resultat_api">
+            Ici le resultat
         </div>
 
         <div class="films_overview high_rated">
@@ -52,23 +56,6 @@
                 <div class="film_card">
                     <img src="" alt="Image du film">
                 </div>
-                <i class="fas fa-arrow-right"></i>
-            </div>
-        </div>
-
-        <div class="films_overview category_one">
-            <h2>Films de la catégorie : un</h2>
-            <div class="card_list">
-                <i class="fas fa-arrow-left"></i>
-                <div class="film_card">
-                    <img src="" alt="Image du film">
-                </div>
-                <div class="film_card">
-                    <img src="" alt="Image du film">
-                </div>
-                <div class="film_card">
-                    <img src="" alt="Image du film">
-                </div>
                 <div class="film_card">
                     <img src="" alt="Image du film">
                 </div>
@@ -76,10 +63,13 @@
             </div>
         </div>
 
-        <div class="films_overview category_two">
-            <h2>Films de la catégorie : deux</h2>
+        <div class="films_overview" id="category_one">
+            <h2>Films de la catégorie : Action</h2>
             <div class="card_list">
                 <i class="fas fa-arrow-left"></i>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
                 <div class="film_card">
                     <img src="" alt="Image du film">
                 </div>
@@ -96,10 +86,36 @@
             </div>
         </div>
 
-        <div class="films_overview category_three">
-            <h2>Films de la catégorie : trois</h2>
+        <div class="films_overview" id="category_two">
+            <h2>Films de la catégorie : Aventure</h2>
             <div class="card_list">
                 <i class="fas fa-arrow-left"></i>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+
+        <div class="films_overview" id="category_three">
+            <h2>Films de la catégorie : Animation</h2>
+            <div class="card_list">
+                <i class="fas fa-arrow-left"></i>
+                <div class="film_card">
+                    <img src="" alt="Image du film">
+                </div>
                 <div class="film_card">
                     <img src="" alt="Image du film">
                 </div>
