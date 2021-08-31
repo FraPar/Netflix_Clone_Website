@@ -13,20 +13,46 @@
   
 h1 {
     color : var(--primary-color);
+    font-size:x-large
 }
 
 h2 {
     color : var(--secondary-color);
+    font-size: small;
 }
 
 .header {
     background-color: darkblue;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
+
+.header_title {
+    background-color: red;
+}
+
+.header_category, .header_home {
+    background-color: green;
+}
+
+.center {
+margin: 50px auto 50px auto ;
+}
+
 
 .films_overview {
     background-color:grey;
-    display: block;
     text-align: center;
+}
+
+.films_overview.gondola_head{
+    height: 15rem;
+    width: 15rem;
+}
+
+.gondola_head i {
+    color: red;
 }
 
 .card_list {
@@ -39,6 +65,11 @@ h2 {
     border: 1px solid black;
     width: 5em;
     height: 5em;
+    margin: 10px 0 10px 0;
+}
+
+.film_details {
+    display: none;
 }
 
 .footer {
