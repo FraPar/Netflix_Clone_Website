@@ -55,12 +55,17 @@ margin: 50px auto 50px auto ;
     color: red;
 }
 
+.gondola_head img {
+    width: 10em;
+    height: 10em;
+}
+
 .card_list {
     background-color:white;
     text-align: center;
 }
 
-.film_card {
+.films_overview .film_card {
     text-align: center;
     display: inline-block;
     width: 5em;
@@ -68,17 +73,74 @@ margin: 50px auto 50px auto ;
     margin: 10px 10px 10px 10px;
 }
 
-.film_card img {
+.films_overview .film_card img {
     width: 5rem;
     height: 5rem;
     margin: 0 0 0 0px;
     border: 2px solid black;
 }
 
-.film_details {
+.idFilm {
     display: none;
 }
 
 .footer {
     background-color: darkblue;
 }
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.modal-header .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#overlay {
+    position: fixed;
+    /* opacity: 0; */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, .5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* https://www.youtube.com/watch?v=MBaw_6cPmAw&ab_channel=WebDevSimplified à 11:30*/
