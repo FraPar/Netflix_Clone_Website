@@ -38,7 +38,47 @@ $(document).ready(function() {
         openModal(modal)
     });
 
+        /* MAJ SELECTION DE FILMS */
+    $("body").on('click', ".fa-arrow-right", function(event) {
+        let urlPage = event.currentTarget.querySelector("div").innerText
+        //let thisDiv = event.currentTarget.parentElement.parentElement.id
+        getThisDiv(event)
+        getNextPage(urlPage)
+    });
+
+    $("body").on('click', ".fa-arrow-left", function(event) {
+        let urlPage = event.currentTarget.querySelector("div").innerText
+        //let thisDiv = event.currentTarget.parentElement.parentElement.id
+        getThisDiv(event)
+        getPreviousPage(urlPage)
+    });
+
 });
+
+
+var thisIsTheDiv = "";
+
+var callBackPreviousPage = function(data) {
+    appendInDiv = '#category_1 .card_list';
+    $( appendInDiv ).empty();
+    if (data.previous != null) {
+        dataToAppend = '<i class="fas fa-arrow-left"><div class="previous_page">\
+        <p>'+ data.previous +'</p></div></i></p>'
+        $( appendInDiv ).append( dataToAppend )
+    }
+
+    for (i = 0; i < 5; i++) {
+        dataToAppend = '<div class="film_card">\
+                        <img src=' + data.results[i].image_url + ' alt="Image du film">\
+                        <div id="idFilm"> ' + data.results[i].id + ' </div>\
+                        </div>';
+        $( appendInDiv ).append( dataToAppend )
+    }
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
+
+    $( appendInDiv ).append( dataToAppend )
+}
 
 var callBackInitializeSuccess = function(data) {
     appendInDiv = '#gondola_head .film_card';
@@ -49,14 +89,11 @@ var callBackInitializeSuccess = function(data) {
                     <div id="idFilm"> ' + data.results[0].id + ' </div>'
     $( appendInDiv ).append( dataToAppend )
     
-    appendInDiv = '.high_rated .card_list';
+    appendInDiv = '#high_rated .card_list';
     /*dataToAppend = '<i class="fas fa-arrow-left"></i>'
     $( appendInDiv ).append( dataToAppend )*/
 
     
-    console.log(" ");
-    console.log("Donnée api", data)
-    console.log(" ");
     for (i = 1; i < 5; i++) {
         dataToAppend = '<div class="film_card">\
                         <img src=' + data.results[i].image_url + ' alt="Image du film">\
@@ -64,7 +101,8 @@ var callBackInitializeSuccess = function(data) {
                         </div>';
         $( appendInDiv ).append( dataToAppend )
     }
-    dataToAppend = '<a href="'+ data.next +'"><i class="fas fa-arrow-right"></i></a>'
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
     $( appendInDiv ).append( dataToAppend )
 }
 
@@ -73,7 +111,6 @@ var callBackCategory1 = function(data) {
     /*dataToAppend = '<i class="fas fa-arrow-left"></i>'
     $( appendInDiv ).append( dataToAppend )*/
 
-    console.log("Donnée api", data)
     for (i = 0; i < 5; i++) {
         dataToAppend = '<div class="film_card">\
                         <img src=' + data.results[i].image_url + ' alt="Image du film">\
@@ -81,7 +118,9 @@ var callBackCategory1 = function(data) {
                         </div>';
         $( appendInDiv ).append( dataToAppend )
     }
-    dataToAppend = '<a href="'+ data.next +'"><i class="fas fa-arrow-right"></i></a>'
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
+
     $( appendInDiv ).append( dataToAppend )
 }
 
@@ -89,11 +128,7 @@ var callBackCategory2 = function(data) {
     appendInDiv = '#category_2 .card_list';
     /*dataToAppend = '<i class="fas fa-arrow-left"></i>'
     $( appendInDiv ).append( dataToAppend )*/
-
     
-    console.log(" ");
-    console.log("Donnée api", data)
-    console.log(" ");
     for (i = 0; i < 5; i++) {
         dataToAppend = '<div class="film_card">\
                         <img src=' + data.results[i].image_url + ' alt="Image du film">\
@@ -101,7 +136,9 @@ var callBackCategory2 = function(data) {
                         </div>';
         $( appendInDiv ).append( dataToAppend )
     }
-    dataToAppend = '<a href="'+ data.next +'"><i class="fas fa-arrow-right"></i></a>'
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
+
     $( appendInDiv ).append( dataToAppend )
 }
 
@@ -110,10 +147,6 @@ var callBackCategory3 = function(data) {
     /*dataToAppend = '<i class="fas fa-arrow-left"></i>'
     $( appendInDiv ).append( dataToAppend )*/
 
-    
-    console.log(" ");
-    console.log("Donnée api", data)
-    console.log(" ");
     for (i = 0; i < 5; i++) {
         dataToAppend = '<div class="film_card">\
                         <img src=' + data.results[i].image_url + ' alt="Image du film">\
@@ -121,12 +154,12 @@ var callBackCategory3 = function(data) {
                         </div>';
         $( appendInDiv ).append( dataToAppend )
     }
-    dataToAppend = '<a href="'+ data.next +'"><i class="fas fa-arrow-right"></i></a>'
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
     $( appendInDiv ).append( dataToAppend )
 }
 
 var callBackFilmId = function(data) {
-    console.log(data)
     appendInDiv = '.film_details';
     $( appendInDiv ).empty();
     dataToAppend = `<div class="popUp">
@@ -163,7 +196,6 @@ function buttonClickGetFilmId() {
 
 function getMostRated() {
     var url = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score"
-    console.log(url)
     $.get(url, callBackInitializeSuccess).done(function() {
         //alert( "second success" )
     })
@@ -178,7 +210,6 @@ function getMostRated() {
 
 function getByGenre1(filmGenre) {
     var url = "http://localhost:8000/api/v1/titles/?genre_contains=" + filmGenre;
-    console.log(url)
     $.get(url, callBackCategory1).done(function() {
         //alert( "second success" )
      })
@@ -193,7 +224,6 @@ function getByGenre1(filmGenre) {
 
 function getByGenre2(filmGenre) {
     var url = "http://localhost:8000/api/v1/titles/?genre_contains=" + filmGenre;
-    console.log(url)
     $.get(url, callBackCategory2).done(function() {
         //alert( "second success" )
      })
@@ -208,7 +238,6 @@ function getByGenre2(filmGenre) {
 
 function getByGenre3(filmGenre) {
     var url = "http://localhost:8000/api/v1/titles/?genre_contains=" + filmGenre;
-    console.log(url)
     $.get(url, callBackCategory3).done(function() {
         //alert( "second success" )
      })
@@ -223,7 +252,6 @@ function getByGenre3(filmGenre) {
 
 function getFilmById(idFilm) {
     var url = "http://localhost:8000/api/v1/titles/" + idFilm;
-    console.log(url)
     $.get(url, callBackFilmId).done(function() {
         //alert( "second success" )
      })
@@ -236,6 +264,34 @@ function getFilmById(idFilm) {
 
 }
 
+function getNextPage(urlPage) {
+    var url = urlPage;
+    $.get(url).done(function(data) {
+        //alert( "second success" )
+        loadNextSelection(data)
+     })
+     .fail(function() {
+         alert( "error" );
+     })
+     .always(function() {
+         //alert( "finished" )
+     }); 
+}
+
+function getPreviousPage(urlPage) {
+    var url = urlPage;
+    $.get(url).done(function(data) {
+        //alert( "second success" )
+        loadPreviousSelection(data)
+     })
+     .fail(function() {
+         alert( "error" );
+     })
+     .always(function() {
+         //alert( "finished" )
+     }); 
+}
+
 function openModal(modal) {
     if (modal == null) return
     modal.classList.add('active')
@@ -246,4 +302,57 @@ function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove('active')
     overlay.classList.remove('active')
+}
+
+function getThisDiv(event) {
+    let thisDiv = event.currentTarget.parentElement.parentElement.id
+    thisIsTheDiv = thisDiv
+}
+
+function loadNextSelection(data) {
+    appendInDiv = '#'+ thisIsTheDiv +' .card_list';
+    dataToAppend = '<i class="fas fa-arrow-left"><div class="previous_page">\
+                    <p>'+ data.previous +'</p></div></i></p>'
+    $( appendInDiv ).empty();
+    $( appendInDiv ).append( dataToAppend )
+
+    for (i = 0; i < 5; i++) {
+        dataToAppend = '<div class="film_card">\
+                        <img src=' + data.results[i].image_url + ' alt="Image du film">\
+                        <div id="idFilm"> ' + data.results[i].id + ' </div>\
+                        </div>';
+        $( appendInDiv ).append( dataToAppend )
+    }
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
+
+    $( appendInDiv ).append( dataToAppend )
+}
+
+function loadPreviousSelection(data) {
+    appendInDiv = '#'+ thisIsTheDiv +' .card_list';
+    $( appendInDiv ).empty();
+    if (data.previous != null) {
+        dataToAppend = '<i class="fas fa-arrow-left"><div class="previous_page">\
+        <p>'+ data.previous +'</p></div></i></p>'
+        $( appendInDiv ).append( dataToAppend )
+    }
+
+    if (data.previous === null && thisIsTheDiv == "high_rated") {
+        i = 1
+    } else {
+        i = 0
+    }
+
+    for (i;  i < 5; i++) {
+        dataToAppend = '<div class="film_card">\
+                        <img src=' + data.results[i].image_url + ' alt="Image du film">\
+                        <div id="idFilm"> ' + data.results[i].id + ' </div>\
+                        </div>';
+        $( appendInDiv ).append( dataToAppend )
+    }
+    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
+                    <p>'+ data.next +'</p></div></i></p>'
+
+    $( appendInDiv ).append( dataToAppend )
 }

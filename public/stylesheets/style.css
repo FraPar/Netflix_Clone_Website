@@ -148,4 +148,8 @@ margin: 50px auto 50px auto ;
     pointer-events: all;
 }
 
+.next_page, .previous_page {
+    display: none;
+}
+
 /* https://www.youtube.com/watch?v=MBaw_6cPmAw&ab_channel=WebDevSimplified à 11:30*/
