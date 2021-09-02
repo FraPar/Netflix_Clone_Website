@@ -8,24 +8,44 @@ $(function() {
     getByGenre2(filmGenre);
     var filmGenre = "adventure";
     getByGenre3(filmGenre);
-
 });
 
+
 $(document).ready(function() {
-    //$('.card_list').click(function() {
-        //idFilm = document.getElementById("idFilm").innerText
-    //$('.film_card').click(function(event) {
+
+    /* OVERLAY MODULE */
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+    const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    const overlay = document.getElementById('overlay')
+
+    openModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = document.querySelector(button.dataset.modalTarget);
+            openModal(modal);
+        })
+    })
+    
+    overlay.addEventListener('click', () => {
+            const modals = document.querySelectorAll('.modal.active')
+            modals.forEach(modal => {
+                closeModal(modal)
+            })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            closeModal(modal);
+        })
+    })
+
+        /* FILM DETAIL MODULE */
     $("body").on('click', ".film_card", function(event) {
-    //$('.film_card').on('click', function(event) {
-        console.log(event)
-        console.log(event.currentTarget)
-        //let idFilm = event.currentTarget.querySelector("div").innerText
         let idFilm = event.currentTarget.querySelector("div").innerText
-        //let idFilm = event.target.innerText
-        //alert(idFilm);
         getFilmById(idFilm)
     });
 });
+
 
 var callBackFilmId = function(data) {
     console.log(data)
@@ -47,8 +67,6 @@ var callBackFilmId = function(data) {
                     </div>`;
     $( appendInDiv ).append( dataToAppend )
 }
-
-
 
 
 var callBackInitializeSuccess = function(data) {
@@ -249,4 +267,16 @@ function getFilmById(idFilm) {
          //alert( "finished" )
      });
 
+}
+
+function openModal(modal) {
+    if (modal == null) return
+    modal.classList.add('active')
+    overlay.classList.add('active')
+}
+
+function closeModal(modal) {
+    if (modal == null) return
+    modal.classList.remove('active')
+    overlay.classList.remove('active')
 }
