@@ -42,7 +42,8 @@ $(document).ready(function() {
     $("body").on('click', ".film_card", function(event) {
         let idFilm = event.currentTarget.querySelector("div").innerText
         const modal = document.querySelector('.modal');
-        getFilmById(idFilm)
+        initializingDescription = false;
+        getFilmById(idFilm, initializingDescription)
         openModal(modal)
     });
 
@@ -58,6 +59,7 @@ $(document).ready(function() {
 
 var filmGenre = "";
 var thisIsTheDiv = "";
+var filmDescription = "";
 
 var callBackPreviousPage = function(data) {
     appendInDiv = '#category_1 .card_list';
@@ -82,16 +84,26 @@ var callBackPreviousPage = function(data) {
 }
 
 var callBackInitializeSuccess = function(data) {
+    console.log("data callBackInitializeSuccess")
+    console.log(data)
+    let idFilm = data.results[0].id;
+    console.log("idFilm callBackInitializeSuccess")
+    console.log(idFilm)
+    initializingDescription = true;
+    console.log(initializingDescription)
+    getFilmById(idFilm, initializingDescription)
+    console.log("filmDescription callBackInitializeSuccess")
+    console.log(filmDescription)
     appendInDiv = '#gondola_head .film_card';
     dataToAppend = '<h1>' + data.results[0].title + '</h1>\
                     <i class="fas fa-play-circle"></i>\
-                    <p>' + data.results[0].title + ' : Description à venir!</p>\
+                    <p></p>\
                     <div id="idFilm"> ' + data.results[0].id + ' </div>'
     $( appendInDiv ).append( dataToAppend )
     document.getElementById("gondola_head").setAttribute("style", 'background-image:url('+data.results[0].image_url+');\
-                                                                   background-size: 20% 80%;\
+                                                                   background-size: 20em 30em;\
                                                                    background-position: center;\
-                                                                   background-position-x: 25%;\
+                                                                   background-position-x: 19%;\
                                                                    background-repeat: no-repeat');
 
     //document.getElementById("gondola_head").style.background-image = "url(data.results[0].image_url);
@@ -103,6 +115,7 @@ var callBackInitializeSuccess = function(data) {
 var callBackFilmId = function(data) {
     appendInDiv = '.film_details';
     $( appendInDiv ).empty();
+    filmDescription = data.description
     dataToAppend = `<div class="popUp">
                     <img src="`+ data.image_url + `" alt="Image du film">
                     <h1>Titre du film : `+ data.title + `</h1>\
@@ -118,6 +131,8 @@ var callBackFilmId = function(data) {
                     <p>Résumé du film : `+ data.description + `</p>\
                     </div>`;
     $( appendInDiv ).append( dataToAppend )
+    console.log("filmDescription callBackFilmId")
+    console.log(filmDescription)
 }
 
 function getMostRatedFilms() {
@@ -148,10 +163,17 @@ function getByGenre(filmGenre, thisIsTheDiv) {
      });
 }
 
-function getFilmById(idFilm) {
+function getFilmById(idFilm, initializingDescription) {
     var url = "http://localhost:8000/api/v1/titles/" + idFilm;
-    $.get(url, callBackFilmId).done(function() {
+    $.get(url, callBackFilmId).done(function(data) {
         //alert( "second success" )
+        if (initializingDescription == true) {
+            console.log("Ca viens de début")
+            appendInDiv = '#gondola_head .film_card';
+            dataToAppend = `<p>Résumé du film : `+ data.long_description + `</p>\
+                            </div>`;
+            $( appendInDiv ).append( dataToAppend )
+        }
      })
      .fail(function() {
          alert( "error" );
@@ -198,8 +220,13 @@ function loadSelection(data, thisIsTheDiv) {
     $( appendInDiv ).empty();
     if (data.previous != null) {
         dataToAppend = '<i class="fas fa-arrow-left"><div class="previous_page">\
-        <p>'+ data.previous +'</p></div></i></p>'
+        <p>'+ data.previous +'</p></div></i>'
         $( appendInDiv ).append( dataToAppend )
+    } else {
+        dataToAppend = '<i class="fas fa-arrow-circle-left"><div class="previous_page">\
+        <p>'+ data.previous +'</p></div></i>'
+        $( appendInDiv ).append( dataToAppend )
+        
     }
 
     if (data.previous === null && thisIsTheDiv == "high_rated") {
