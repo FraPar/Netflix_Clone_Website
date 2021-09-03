@@ -86,10 +86,16 @@ var callBackInitializeSuccess = function(data) {
     dataToAppend = '<h1>' + data.results[0].title + '</h1>\
                     <i class="fas fa-play-circle"></i>\
                     <p>' + data.results[0].title + ' : Description à venir!</p>\
-                    <img src="' + data.results[0].image_url + '" alt="Image de la vidéo">\
                     <div id="idFilm"> ' + data.results[0].id + ' </div>'
     $( appendInDiv ).append( dataToAppend )
+    document.getElementById("gondola_head").setAttribute("style", 'background-image:url('+data.results[0].image_url+');\
+                                                                   background-size: 20% 80%;\
+                                                                   background-position: center;\
+                                                                   background-position-x: 25%;\
+                                                                   background-repeat: no-repeat');
 
+    //document.getElementById("gondola_head").style.background-image = "url(data.results[0].image_url);
+    /*background-image:url(images/image_de_fond.png);*/
     thisIsTheDiv = "high_rated"
     loadSelection(data, thisIsTheDiv)
 }
