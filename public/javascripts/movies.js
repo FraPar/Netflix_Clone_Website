@@ -1,7 +1,4 @@
 $(function() {
-    var nbDiv = $(".high_rated .card_list .film_card").length;
-    console.log(nbDiv)
-    console.log(thisIsTheDiv)
     getMostRatedFilms();
 
     for (category = 1; category <= 3; category++) {
@@ -84,16 +81,9 @@ var callBackPreviousPage = function(data) {
 }
 
 var callBackInitializeSuccess = function(data) {
-    console.log("data callBackInitializeSuccess")
-    console.log(data)
     let idFilm = data.results[0].id;
-    console.log("idFilm callBackInitializeSuccess")
-    console.log(idFilm)
     initializingDescription = true;
-    console.log(initializingDescription)
     getFilmById(idFilm, initializingDescription)
-    console.log("filmDescription callBackInitializeSuccess")
-    console.log(filmDescription)
     appendInDiv = '#gondola_head .film_card';
     dataToAppend = '<h1>' + data.results[0].title + '</h1>\
                     <div id="idFilm"> ' + data.results[0].id + ' </div>'
@@ -130,8 +120,6 @@ var callBackFilmId = function(data) {
                     <p><strong>Résumé du film :</strong> `+ data.description + `</p>\
                     </div>`;
     $( appendInDiv ).append( dataToAppend )
-    console.log("filmDescription callBackFilmId")
-    console.log(filmDescription)
 }
 
 function getMostRatedFilms() {
@@ -167,7 +155,6 @@ function getFilmById(idFilm, initializingDescription) {
     $.get(url, callBackFilmId).done(function(data) {
         //alert( "second success" )
         if (initializingDescription == true) {
-            console.log("Ca viens de début")
             appendInDiv = '#gondola_head .film_card';
             dataToAppend = `<p><strong>Résumé du film :</strong> `+ data.long_description + `</p>\
                             </div>`;
