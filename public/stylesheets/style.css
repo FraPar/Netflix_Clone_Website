@@ -137,12 +137,9 @@ p {
     margin: 0px 20px 8px 20px
 }
 
-/* A VOIR SI UTILE ? */
 .center {
     margin: 0px auto 0px auto ;
     }
-
-/* A NE PAS MODIFIER! */
 
 .modal {
     position: fixed;

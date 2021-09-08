@@ -1,3 +1,4 @@
+// initializing the page with all content we need
 $(function() {
     getMostRatedFilms();
 
@@ -44,7 +45,7 @@ $(document).ready(function() {
         openModal(modal)
     });
 
-        /* MAJ SELECTION DE FILMS */
+        /* MAJ FILMS SELECTION  */
     $("body").on('click', ".fa-arrow-right, .fa-arrow-left", function(event) {
         let urlPage = event.currentTarget.querySelector("div").innerText
         //let thisDiv = event.currentTarget.parentElement.parentElement.id
@@ -58,28 +59,7 @@ var filmGenre = "";
 var thisIsTheDiv = "";
 var filmDescription = "";
 
-var callBackPreviousPage = function(data) {
-    appendInDiv = '#category_1 .card_list';
-    $( appendInDiv ).empty();
-    if (data.previous != null) {
-        dataToAppend = '<i class="fas fa-arrow-left"><div class="previous_page">\
-        <p>'+ data.previous +'</p></div></i></p>'
-        $( appendInDiv ).append( dataToAppend )
-    }
-
-    for (i = 0; i < 5; i++) {
-        dataToAppend = '<div class="film_card">\
-                        <img src=' + data.results[i].image_url + ' alt="Image du film">\
-                        <div id="idFilm"> ' + data.results[i].id + ' </div>\
-                        </div>';
-        $( appendInDiv ).append( dataToAppend )
-    }
-    dataToAppend = '<i class="fas fa-arrow-right"><div class="next_page">\
-                    <p>'+ data.next +'</p></div></i></p>'
-
-    $( appendInDiv ).append( dataToAppend )
-}
-
+// initializing the gondola head space
 var callBackInitializeSuccess = function(data) {
     let idFilm = data.results[0].id;
     initializingDescription = true;
@@ -100,6 +80,7 @@ var callBackInitializeSuccess = function(data) {
     loadSelection(data, thisIsTheDiv)
 }
 
+// write inside the popup
 var callBackFilmId = function(data) {
     appendInDiv = '.film_details';
     $( appendInDiv ).empty();
@@ -122,6 +103,7 @@ var callBackFilmId = function(data) {
     $( appendInDiv ).append( dataToAppend )
 }
 
+// get highest rated films
 function getMostRatedFilms() {
     var url = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score"
     $.get(url, callBackInitializeSuccess).done(function() {
@@ -136,6 +118,7 @@ function getMostRatedFilms() {
 
 }
 
+// get the films by genre
 function getByGenre(filmGenre, thisIsTheDiv) {
     var url = "http://localhost:8000/api/v1/titles/?genre_contains=" + filmGenre;
     $.get(url).done(function(data) {
@@ -150,6 +133,7 @@ function getByGenre(filmGenre, thisIsTheDiv) {
      });
 }
 
+// write the id of the film inside films cards
 function getFilmById(idFilm, initializingDescription) {
     var url = "http://localhost:8000/api/v1/titles/" + idFilm;
     $.get(url, callBackFilmId).done(function(data) {
@@ -170,6 +154,7 @@ function getFilmById(idFilm, initializingDescription) {
 
 }
 
+// get the selection of films and load it on the page
 function getSelection(urlPage) {
     var url = urlPage;
     $.get(url).done(function(data) {
@@ -184,23 +169,27 @@ function getSelection(urlPage) {
      }); 
 }
 
+// opening overlay module
 function openModal(modal) {
     if (modal == null) return
     modal.classList.add('active')
     overlay.classList.add('active')
 }
 
+// closing overlay module
 function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove('active')
     overlay.classList.remove('active')
 }
 
+// publishing the div used in other function
 function getThisDiv(event) {
     let thisDiv = event.currentTarget.parentElement.parentElement.id
     thisIsTheDiv = thisDiv
 }
 
+// function being able to load next or previous selection of films
 function loadSelection(data, thisIsTheDiv) {
     appendInDiv = '#'+ thisIsTheDiv +' .card_list';
     $( appendInDiv ).empty();
@@ -215,12 +204,14 @@ function loadSelection(data, thisIsTheDiv) {
         
     }
 
+    // permit to know if we have the special case of 1st throw of film in high rated without de gondola head
     if (data.previous === null && thisIsTheDiv == "high_rated") {
         i = 1
     } else {
         i = 0
     }
 
+    // loading all 4 cards containing films
     for (i;  i < 5; i++) {
         dataToAppend = '<div class="film_card">\
                         <img src=' + data.results[i].image_url + ' alt="Image du film">\
