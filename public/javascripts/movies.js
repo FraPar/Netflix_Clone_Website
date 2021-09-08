@@ -74,8 +74,6 @@ var callBackInitializeSuccess = function(data) {
                                                                    background-position-x: 19%;\
                                                                    background-repeat: no-repeat;');
 
-    //document.getElementById("gondola_head").style.background-image = "url(data.results[0].image_url);
-    /*background-image:url(images/image_de_fond.png);*/
     thisIsTheDiv = "high_rated"
     loadSelection(data, thisIsTheDiv)
 }
